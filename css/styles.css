@@ -76,25 +76,25 @@ div.subtitle {
     overflow-y: auto;
     border-right: 1px solid #aaa;
     position: relative;
-    /* animation: 1s slide-right 1s forwards; */
-    /* transform:translateX(-100%); */
-}
-/* .scripturecontent{
+     animation: 1s slide-right 1s forwards; 
+     transform:translateX(-100%); 
+    }
+ .scripturecontent{
   animation: 0.1s slide-right 0.1s forwards;
   transform:translateX(0%);
-} */
-/* @keyframes slide-right {
+    } 
+ @keyframes slide-right {
   to {
     transform:translateX(0);
-  }
-} */
-/* .scripturecontent-view{
+    }
+    } 
+ .scripturecontent-view{
   transform:translateX(0);
-}
+    }
 .scripturecontent-first{
   transition: 1s;
   left: 0;
-} */
+    } 
 #scripnav {
     position: absolute;
     max-height: 100%;
