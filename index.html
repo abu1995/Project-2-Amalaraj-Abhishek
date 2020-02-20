@@ -1,5 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="">
+
 <head>
     <meta charset="utf-8">
     <title>The Scriptures Mapped</title>
@@ -8,13 +9,22 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .onHashChanged {
+            transition-property: all;
+            transition-timing-function: ease-in-out;
+            transition-duration: 2000ms;
+            transition-delay: 2500ms;
+        }
+    </style>
 </head>
+
 <body>
     <div id="header">
         <div id="crumbs"></div>
         <div id="centerhead">
             <div class="title">The Scriptures, Mapped</div>
-            <div class="subtitle">By Stephen W. Liddle</div>
+            <div class="subtitle">By Abhishek Amalaraj</div>
         </div>
     </div>
     <div id="content">
@@ -26,32 +36,17 @@
 
         function initMap() {
             window.map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 31.777444, lng: 35.234935},
+                center: {
+                    lat: 31.777444,
+                    lng: 35.234935
+                },
                 zoom: 8
             });
         }
     </script>
     <script type="module">
-        import {default as Scriptures} from "./js/scriptures.js";
-
-        function ready(fn) {
-            if (document.readyState != 'loading') {
-                fn();
-            } else {
-                document.addEventListener('DOMContentLoaded', fn);
-            }
-        }
-
-        // Export to the global object (window) the two methods we need:
-        window.changeHash = Scriptures.changeHash;
-        window.showLocation = Scriptures.showLocation;
-
-        ready(function () {
-            Scriptures.init(function () {
-                window.addEventListener("hashchange", Scriptures.onHashChanged);
-                Scriptures.onHashChanged();
-            });
-        });
+        import {default as Scriptures} from "./js/scriptures.js"; function ready(fn) { if (document.readyState != 'loading') { fn(); } else { document.addEventListener('DOMContentLoaded', fn); } } // Export to the global object (window) the two methods we need:
+        window.changeHash = Scriptures.changeHash; window.showLocation = Scriptures.showLocation; ready(function () { Scriptures.init(function () { window.addEventListener("hashchange", Scriptures.onHashChanged); Scriptures.onHashChanged(); }); });
     </script>
     <!--
 
@@ -79,8 +74,8 @@
 
 
       -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfOYd__a-v1-r4zWH777oFzJIUupETBWc&callback=initMap"
-            async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfOYd__a-v1-r4zWH777oFzJIUupETBWc&callback=initMap" async defer></script>
     <script src="js/maplabel.js" defer></script>
 </body>
+
 </html>
