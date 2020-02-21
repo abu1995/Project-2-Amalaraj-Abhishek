@@ -70,14 +70,14 @@ let volumes;
 /*------------------------------------------------------------------------
  *                      PRIVATE METHODS
  */
-const addMarker = function (placename, latitude, longitude) {
+const addMarker = function(placename, latitude, longitude) {
     let index = markerIndex(latitude, longitude);
 
     if (index >= 0) {
         mergePlacename(placename, index);
     } else {
         let marker = new google.maps.Marker({
-            position: {lat: Number(latitude), lng: Number(longitude)},
+            position: { lat: Number(latitude), lng: Number(longitude) },
             map,
             title: placename,
             animation: google.maps.Animation.DROP
@@ -108,7 +108,7 @@ const addMarker = function (placename, latitude, longitude) {
     }
 };
 
-const bookChapterValid = function (bookId, chapter) {
+const bookChapterValid = function(bookId, chapter) {
     let book = books[bookId];
 
     if (book === undefined || chapter < 0 || chapter > book.numChapters) {
@@ -122,17 +122,17 @@ const bookChapterValid = function (bookId, chapter) {
     return true;
 };
 
-const booksGrid = function (volume) {
+const booksGrid = function(volume) {
     return htmlDiv({
         classKey: CLASS_BOOKS,
         content: booksGridContent(volume)
     });
 };
 
-const booksGridContent = function (volume) {
+const booksGridContent = function(volume) {
     let gridContent = "";
 
-    volume.books.forEach(function (book) {
+    volume.books.forEach(function(book) {
         gridContent += htmlLink({
             classKey: CLASS_BUTTON,
             id: book.id,
@@ -144,7 +144,7 @@ const booksGridContent = function (volume) {
     return gridContent;
 };
 
-const breadcrumbs = function (volume, book, chapter) {
+const breadcrumbs = function(volume, book, chapter) {
     let crumbs;
 
     if (volume === undefined) {
@@ -169,8 +169,8 @@ const breadcrumbs = function (volume, book, chapter) {
     return htmlElement(TAG_UNORDERED_LIST, crumbs);
 };
 
-const cacheBooks = function (onInitializedCallback) {
-    volumes.forEach(function (volume) {
+const cacheBooks = function(onInitializedCallback) {
+    volumes.forEach(function(volume) {
         let volumeBooks = [];
         let bookId = volume.minBookId;
 
@@ -187,7 +187,7 @@ const cacheBooks = function (onInitializedCallback) {
     }
 };
 
-const changeHash = function (volumeId, bookId, chapter) {
+const changeHash = function(volumeId, bookId, chapter) {
     let newHash = "";
 
     if (volumeId !== undefined) {
@@ -205,7 +205,7 @@ const changeHash = function (volumeId, bookId, chapter) {
     location.hash = newHash;
 };
 
-const chaptersGrid = function (book) {
+const chaptersGrid = function(book) {
     return htmlDiv({
         classKey: CLASS_VOLUME,
         content: htmlElement(TAG_VOLUME_HEADER, book.fullName)
@@ -215,7 +215,7 @@ const chaptersGrid = function (book) {
     });
 };
 
-const chaptersGridContent = function (book) {
+const chaptersGridContent = function(book) {
     let gridContent = "";
     let chapter = 1;
 
@@ -233,18 +233,18 @@ const chaptersGridContent = function (book) {
     return gridContent;
 };
 
-const clearMarkers = function () {
-    gmLabels.forEach(function (marker) {
+const clearMarkers = function() {
+    gmLabels.forEach(function(marker) {
         marker.setMap(null);
     });
-    gmMarkers.forEach(function (marker) {
+    gmMarkers.forEach(function(marker) {
         marker.setMap(null);
     });
 
     gmMarkers = [];
 };
 
-const encodedScripturesUrlParameters = function (bookId, chapter, verses, isJst) {
+const encodedScripturesUrlParameters = function(bookId, chapter, verses, isJst) {
     if (bookId !== undefined && chapter !== undefined) {
         let options = "";
 
@@ -259,21 +259,54 @@ const encodedScripturesUrlParameters = function (bookId, chapter, verses, isJst)
         return `${URL_SCRIPTURES}?book=${bookId}&chap=${chapter}&verses${options}`;
     }
 };
+const getScripturesCallback = function(chapterHtml) {
 
-const getScripturesCallback = function (chapterHtml) {
-    document.getElementById(DIV_SCRIPTURES).innerHTML = chapterHtml;
-    document.querySelectorAll(".navheading").forEach(function (element) {
-        element.appendChild(parseHtml(`<div class="nextprev">${requestedNextPrevious}</div>`)[0]);
-    });
-    document.getElementById(DIV_BREADCRUMBS).innerHTML = requestedBreadcrumbs;
-    setupMarkers();
+    const contentDiv = document.getElementById(DIV_SCRIPTURES);
+    const scriptureContentDiv = document.getElementsByClassName(
+        "scripturecontent"
+    );
+    if (scriptureContentDiv[0]) {
+        scriptureContentDiv[0].classList.add("slideLeft");
+    }
+
+    chapterHtml = chapterHtml.replace(
+        'class="scripturecontent"',
+        'class="scripturecontent slideLeft"'
+    );
+
+    setTimeout(() => {
+        contentDiv.innerHTML = chapterHtml;
+        document.querySelectorAll(".navheading").forEach(function(element) {
+            element.appendChild(
+                parseHtml(`<div class="nextprev">${requestedNextPrevious}</div>`)[0]
+            );
+        });
+        document.getElementById(DIV_BREADCRUMBS).innerHTML = requestedBreadcrumbs;
+        setupMarkers();
+
+        const scriptureContentDiv = document.getElementsByClassName(
+            "scripturecontent"
+        );
+        if (scriptureContentDiv[0]) {
+            scriptureContentDiv[0].classList.remove("slideLeft");
+        }
+    }, 500);
 };
 
-const htmlAnchor = function (volume) {
+// const getScripturesCallback = function (chapterHtml) {
+//     document.getElementById(DIV_SCRIPTURES).innerHTML = chapterHtml;
+//     document.querySelectorAll(".navheading").forEach(function (element) {
+//         element.appendChild(parseHtml(`<div class="nextprev">${requestedNextPrevious}</div>`)[0]);
+//     });
+//     document.getElementById(DIV_BREADCRUMBS).innerHTML = requestedBreadcrumbs;
+//     setupMarkers();
+// };
+
+const htmlAnchor = function(volume) {
     return `<a name="v${volume.id}" />`;
 };
 
-const htmlDiv = function (parameters) {
+const htmlDiv = function(parameters) {
     let classString = "";
     let contentString = "";
     let idString = "";
@@ -293,7 +326,7 @@ const htmlDiv = function (parameters) {
     return `<div${idString}${classString}>${contentString}</div>`;
 };
 
-const htmlElement = function (tagName, content, classKey) {
+const htmlElement = function(tagName, content, classKey) {
     let classString = "";
 
     if (classKey !== undefined) {
@@ -303,7 +336,7 @@ const htmlElement = function (tagName, content, classKey) {
     return `<${tagName}${classString}>${content}</${tagName}>`;
 };
 
-const htmlHashLink = function (hashArguments, content, title) {
+const htmlHashLink = function(hashArguments, content, title) {
     let linkConfiguration = {
         content,
         href: "javascript:void(0)",
@@ -317,7 +350,7 @@ const htmlHashLink = function (hashArguments, content, title) {
     return htmlLink(linkConfiguration);
 };
 
-const htmlLink = function (parameters) {
+const htmlLink = function(parameters) {
     let classString = "";
     let contentString = "";
     let hrefString = "";
@@ -352,46 +385,46 @@ const htmlLink = function (parameters) {
     return `<a${idString}${classString}${hrefString}${onclickString}${titleString}>${contentString}</a>`;
 };
 
-const init = function (onInitializedCallback) {
+const init = function(onInitializedCallback) {
     let booksLoaded = false;
     let volumesLoaded = false;
 
-    fetch(URL_BOOKS).then(function (response) {
+    fetch(URL_BOOKS).then(function(response) {
         if (response.ok) {
             return response.json();
         }
 
         throw new Error("Unable to retrieve required data from server.");
-    }).then(function (booksObject) {
+    }).then(function(booksObject) {
         books = booksObject;
         booksLoaded = true;
 
         if (volumesLoaded) {
             cacheBooks(onInitializedCallback);
         }
-    }).catch(function (error) {
+    }).catch(function(error) {
         console.log("Error: ", error.message);
     });
 
-    fetch(URL_VOLUMES).then(function (response) {
+    fetch(URL_VOLUMES).then(function(response) {
         if (response.ok) {
             return response.json();
         }
 
         throw new Error("Unable to retrieve required data from server.");
-    }).then(function (volumesArray) {
+    }).then(function(volumesArray) {
         volumes = volumesArray;
         volumesLoaded = true;
 
         if (booksLoaded) {
             cacheBooks(onInitializedCallback);
         }
-    }).catch(function (error) {
+    }).catch(function(error) {
         console.log("Error: ", error.message);
     });
 };
 
-const markerIndex = function (latitude, longitude) {
+const markerIndex = function(latitude, longitude) {
     let i = gmMarkers.length - 1;
 
     while (i >= 0) {
@@ -412,7 +445,7 @@ const markerIndex = function (latitude, longitude) {
     return -1;
 };
 
-const mergePlacename = function (placename, index) {
+const mergePlacename = function(placename, index) {
     let marker = gmMarkers[index];
     let label = gmLabels[index];
     let title = marker.getTitle();
@@ -424,7 +457,7 @@ const mergePlacename = function (placename, index) {
     }
 };
 
-const navigateBook = function (bookId) {
+const navigateBook = function(bookId) {
     let book = books[bookId];
     let volume;
 
@@ -443,7 +476,7 @@ const navigateBook = function (bookId) {
     }
 };
 
-const navigateChapter = function (bookId, chapter) {
+const navigateChapter = function(bookId, chapter) {
     if (bookId !== undefined) {
         let book = books[bookId];
         let volume = volumes[book.parentBookId - 1];
@@ -464,19 +497,19 @@ const navigateChapter = function (bookId, chapter) {
             requestedNextPrevious += nextPreviousMarkup(nextPrev, ICON_NEXT);
         }
 
-        fetch(encodedScripturesUrlParameters(bookId, chapter)).then(function (response) {
+        fetch(encodedScripturesUrlParameters(bookId, chapter)).then(function(response) {
             if (response.ok) {
                 return response.text();
             }
 
             throw new Error("Unable to retrieve chapter information from server.");
-        }).then((html) => getScripturesCallback(html)).catch(function (error) {
+        }).then((html) => getScripturesCallback(html)).catch(function(error) {
             console.log("Error: ", error.message);
         });
     }
 };
 
-const navigateHome = function (volumeId) {
+const navigateHome = function(volumeId) {
     document.getElementById(DIV_SCRIPTURES).innerHTML = htmlDiv({
         id: DIV_SCRIPTURES_NAVIGATOR,
         content: volumesGridContent(volumeId)
@@ -488,7 +521,7 @@ const navigateHome = function (volumeId) {
 // Book ID and chapter must be integers
 // Returns undefined if there is no next chapter
 // Otherwise returns an array with the next book ID, chapter, and title
-const nextChapter = function (bookId, chapter) {
+const nextChapter = function(bookId, chapter) {
     let book = books[bookId];
 
     if (book !== undefined) {
@@ -518,7 +551,7 @@ const nextChapter = function (bookId, chapter) {
     }
 };
 
-const nextPreviousMarkup = function (nextPrev, icon) {
+const nextPreviousMarkup = function(nextPrev, icon) {
     return htmlHashLink(
         `0, ${nextPrev[0]}, ${nextPrev[1]}`,
         htmlElement(TAG_ITALICS, icon, CLASS_ICON),
@@ -528,7 +561,7 @@ const nextPreviousMarkup = function (nextPrev, icon) {
 
 // We're expecting a hash value of the form #volume:book:chapter,
 // where each of the three parameters is optional.
-const onHashChanged = function () {
+const onHashChanged = function() {
     let ids = [];
 
     if (location.hash !== "" && location.hash.length > 1) {
@@ -566,7 +599,7 @@ const onHashChanged = function () {
     }
 };
 
-const parseHtml = function (html) {
+const parseHtml = function(html) {
     let htmlDocument = document.implementation.createHTMLDocument();
 
     htmlDocument.body.innerHTML = html;
@@ -577,7 +610,7 @@ const parseHtml = function (html) {
 // Book ID and chapter must be integers
 // Returns undefined if there is no previous chapter
 // Otherwise returns an array with the next book ID, chapter, and title
-const previousChapter = function (bookId, chapter) {
+const previousChapter = function(bookId, chapter) {
     let book = books[bookId];
 
     if (book !== undefined) {
@@ -597,7 +630,7 @@ const previousChapter = function (bookId, chapter) {
     }
 };
 
-const setupMarkers = function () {
+const setupMarkers = function() {
     if (window.google === undefined) {
         let retryId = window.setTimeout(setupMarkers, retryDelay);
 
@@ -616,7 +649,7 @@ const setupMarkers = function () {
 
     let matches;
 
-    document.querySelectorAll("a[onclick^=\"showLocation(\"]").forEach(function (element) {
+    document.querySelectorAll("a[onclick^=\"showLocation(\"]").forEach(function(element) {
         matches = LAT_LON_PARSER.exec(element.getAttribute("onclick"));
 
         if (matches) {
@@ -649,7 +682,7 @@ const setupMarkers = function () {
         } else {
             let bounds = new google.maps.LatLngBounds();
 
-            gmMarkers.forEach(function (marker) {
+            gmMarkers.forEach(function(marker) {
                 bounds.extend(marker.position);
             });
 
@@ -659,14 +692,14 @@ const setupMarkers = function () {
     }
 };
 
-const showLocation = function (id, placename, latitude, longitude, viewLatitude, viewLongitude, viewTilt, viewRoll, viewAltitude, viewHeading) {
+const showLocation = function(id, placename, latitude, longitude, viewLatitude, viewLongitude, viewTilt, viewRoll, viewAltitude, viewHeading) {
     console.log(`${id} ${placename} ${viewLatitude} ${viewLongitude}`);
     console.log(`${viewTilt} ${viewRoll} ${viewHeading}`);
-    map.panTo({lat: latitude, lng: longitude});
+    map.panTo({ lat: latitude, lng: longitude });
     map.setZoom(Math.round(viewAltitude / ZOOM_RATIO));
 };
 
-const titleForBookChapter = function (book, chapter) {
+const titleForBookChapter = function(book, chapter) {
     if (chapter > 0) {
         return book.tocName + " " + chapter;
     }
@@ -674,25 +707,25 @@ const titleForBookChapter = function (book, chapter) {
     return book.tocName;
 };
 
-const transitionBreadcrumbs = function (newCrumbs) {
+const transitionBreadcrumbs = function(newCrumbs) {
     document.getElementById(DIV_BREADCRUMBS).innerHTML = newCrumbs;
 };
 
-const transitionScriptures = function (newContent) {
-    document.getElementById(DIV_SCRIPTURES).innerHTML = htmlDiv({content: newContent});
+const transitionScriptures = function(newContent) {
+    document.getElementById(DIV_SCRIPTURES).innerHTML = htmlDiv({ content: newContent });
     setupMarkers(newContent);
 };
 
-const volumeForId = function (volumeId) {
+const volumeForId = function(volumeId) {
     if (volumeId !== undefined && volumeId > 0 && volumeId <= volumes.length) {
         return volumes[volumeId - 1];
     }
 };
 
-const volumesGridContent = function (volumeId) {
+const volumesGridContent = function(volumeId) {
     let gridContent = "";
 
-    volumes.forEach(function (volume) {
+    volumes.forEach(function(volume) {
         if (volumeId === undefined || volumeId === volume.id) {
             gridContent += htmlDiv({
                 classKey: CLASS_VOLUME,
