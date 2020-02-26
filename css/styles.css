@@ -181,7 +181,7 @@ div.books a.chapter {
 }
 
 #crumbs li::before {
-    content: "--";
+    content: ":)";
     padding: .3em;
 }
 
