@@ -6,7 +6,7 @@ html {
 
 body {
     color: #222;
-    background-color: navy;
+    background-color: rgb(6, 85, 255);
     margin: 0;
     padding: 0;
     min-height: 100%;
@@ -20,11 +20,12 @@ img {
 
 #header {
     position: absolute;
-    font-family: fantasy;
+    font-family: cursive;
+    font-size: medium;
     top: 0;
     left: 0;
     right: 0;
-    background-color: navy;
+    background-color: rgb(6, 85, 255);
     color: gold;
     height: 56px;
     display: flex;
@@ -87,33 +88,8 @@ div.subtitle {
     overflow-y: auto;
     border-right: 1px solid rgb(79, 79, 170);
     position: relative;
-    animation: 1s slide-right 1s forwards;
-    transform: translateX(-100%);
-}
-
-.scripturecontent {
-    animation: 0.1s slide-right 0.1s forwards;
-    transition: all 200ms ease-in;
-    height: 100%;
-}
-
-.scripturecontent.slideLeft {
-    transform: translateX(-100%);
-}
-
-@keyframes slide-right {
-    to {
-        transform: translateX(0);
-    }
-}
-
-.scripturecontent-view {
-    transform: translateX(0);
-}
-
-.scripturecontent-first {
-    transition: 1s;
-    left: 0;
+    /* animation: 1s slide-right 1s forwards;
+    transform: translateX(-100%); */
 }
 
 #scripnav {
@@ -150,7 +126,7 @@ div.books a {
     margin: .4em;
     padding-left: .5em;
     padding-right: .5em;
-    background-color: navy;
+    background-color: rgb(6, 85, 255);
     color: gold;
 }
 
@@ -224,7 +200,7 @@ div.books a.chapter {
     transition-duration: 350ms;
     transition-timing-function: ease-in-out;
     color: white;
-    box-shadow: 2px 2px 1px navy;
+    /* box-shadow: 2px 2px 1px navy; */
 }
 
 #header a:link,
@@ -261,7 +237,9 @@ div.text {
     font-family: cursive;
     font-size: 12pt;
     font-weight: normal;
-    background-color: burlywood;
+    background-color: #bfe0ff;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='12' viewBox='0 0 40 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6.172L6.172 0h5.656L0 11.828V6.172zm40 5.656L28.172 0h5.656L40 6.172v5.656zM6.172 12l12-12h3.656l12 12h-5.656L20 3.828 11.828 12H6.172zm12 0L20 10.172 21.828 12h-3.656z' fill='%23f4b438' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+    /* background-color: burlywood; */
     padding-bottom: 3rem;
 }
 
@@ -377,7 +355,7 @@ li.match {
         top: 0;
         left: 0;
         right: 0;
-        background-color: navy;
+        background-color: rgb(6, 85, 255);
         height: 5%;
         color: yellow;
         display: flex;
@@ -464,7 +442,7 @@ li.match {
         top: 0;
         left: 0;
         right: 0;
-        background-color: navy;
+        background-color: rgb(6, 85, 255);
         height: 10%;
         color: yellow;
         display: flex;
@@ -540,7 +518,7 @@ li.match {
         top: 0;
         left: 0;
         right: 0;
-        background-color: navy;
+        background-color: rgb(6, 85, 255);
         height: 5%;
         color: yellow;
         display: flex;
@@ -594,7 +572,7 @@ li.match {
         top: 0;
         left: 0;
         right: 0;
-        background-color: navy;
+        background-color: rgb(6, 85, 255);
         height: 5%;
         color: yellow;
         display: flex;
