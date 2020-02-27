@@ -298,7 +298,7 @@ span.verse {
 }
 
 .scripturewrapper li a:hover {
-    color: #ffffff;
+    color: rgb(255, 255, 255);
     text-decoration: underline;
 }
 
@@ -310,7 +310,7 @@ span.verse {
 }
 
 .navheading a:hover {
-    color: #000000;
+    color: #ffd476;
     text-decoration: underline;
 }
 
@@ -354,7 +354,7 @@ li.match {
     }
     #header {
         position: absolute;
-        font-family: fantasy;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
         top: 0;
         left: 0;
         right: 0;
@@ -444,7 +444,7 @@ li.match {
     }
     #header {
         position: absolute;
-        font-family: fantasy;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
         top: 0;
         left: 0;
         right: 0;
@@ -522,7 +522,7 @@ li.match {
     }
     #header {
         position: absolute;
-        font-family: fantasy;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
         top: 0;
         left: 0;
         right: 0;
@@ -578,7 +578,7 @@ li.match {
     }
     #header {
         position: absolute;
-        font-family: fantasy;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
         top: 0;
         left: 0;
         right: 0;
